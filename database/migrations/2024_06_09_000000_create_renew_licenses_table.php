@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateRenewLicensesTable extends Migration
 {
-    public function up()
-    {
+   public function up()
+{
+    if (!Schema::hasTable('renew_licenses')) {
         Schema::create('renew_licenses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('applicant_id');
@@ -20,6 +21,7 @@ class CreateRenewLicensesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
+}
 
     public function down()
     {
