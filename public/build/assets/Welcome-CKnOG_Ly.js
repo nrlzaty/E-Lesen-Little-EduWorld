@@ -1,0 +1,1 @@
+import{Q as o,z as r}from"./app-DoPaJPuH.js";const u={__name:"Welcome",setup(t){const{props:e}=o();return r(()=>{e.auth.user?window.location.href=route("dashboard"):window.location.href=route("register")}),(n,s)=>null}};export{u as default};
