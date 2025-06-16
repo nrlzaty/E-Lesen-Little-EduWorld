@@ -9,11 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up()
+public function up(): void
 {
-    Schema::table('applicants', function (Blueprint $table) {
-        $table->dropColumn('is_renewal');
-    });
+    if (Schema::hasColumn('applicants', 'is_renewal')) {
+        Schema::table('applicants', function (Blueprint $table) {
+            $table->dropColumn('is_renewal');
+        });
+    }
 }
 public function down()
 {
