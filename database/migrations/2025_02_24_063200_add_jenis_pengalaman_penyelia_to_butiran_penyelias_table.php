@@ -9,12 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+   public function up()
+{
+    if (!Schema::hasColumn('butiran_penyelias', 'jenis_pengalaman_penyelia')) {
         Schema::table('butiran_penyelias', function (Blueprint $table) {
             $table->string('jenis_pengalaman_penyelia')->nullable()->after('kelulusan_akademik_penyelia');
         });
     }
+}
 
     /**
      * Reverse the migrations.
