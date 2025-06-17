@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Applicant;
+use App\Models\User;
+use App\Notifications\PenyemakNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -177,6 +179,12 @@ class ApplicantController extends Controller
             if (auth()->user()->role === 'kerani' || auth()->user()->role === 'Kerani') {
                 $applicant->notification_status = 'alert_penyemak';
                 $applicant->save();
+
+                // Send email notification to Pegawai Penyemakan
+                $penyemakUsers = User::where('role', 'Pegawai Penyemakan')->get();
+                foreach ($penyemakUsers as $user) {
+                    $user->notify(new PenyemakNotification($applicant));
+                }
             } else {
                 // If not Kerani, keep alert_kerani for new incomplete forms
                 $applicant->notification_status = 'alert_kerani';
@@ -255,6 +263,13 @@ class ApplicantController extends Controller
             $applicant->status = 'Perbaharui Lesen Dalam Semakan'; // or your review status
             $applicant->notification_status = 'alert_penyemak';
             $applicant->save();
+
+            // Send email notification to Pegawai Penyemakan for renew review
+            $penyemakUsers = User::where('role', 'Pegawai Penyemakan')->get();
+            foreach ($penyemakUsers as $user) {
+                $user->notify(new PenyemakNotification($applicant));
+            }
+
             return response()->json(['success' => true]);
         }
         abort(403);

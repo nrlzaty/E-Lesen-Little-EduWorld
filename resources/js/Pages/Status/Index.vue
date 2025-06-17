@@ -30,6 +30,10 @@ const props = defineProps({
     applicants:[Object,Array],
 });
 
+const page = usePage();
+
+const isAdmin = computed(() => page.props.auth.user.role === 'Admin');
+
 // List of applicant names who have edited after Borang Tidak Lengkap
 const editedApplicants = computed(() =>
     props.applicants.data
@@ -37,8 +41,20 @@ const editedApplicants = computed(() =>
         .map(a => a.nama)
 );
 
-// Filtered applicants based on search and status
+// Remove local filtering for admin, use server-side filtering
+watch([search, statusFilter], ([newSearch, newStatus]) => {
+    if (isAdmin.value) {
+        router.get(route('status.index'), { search: newSearch, status: newStatus }, { preserveState: true, replace: true });
+    }
+    // For other roles, you can keep local filtering or also use server-side if desired
+});
+
+// Filtered applicants based on search and status (for non-admin)
 const filteredApplicants = computed(() => {
+    if (isAdmin.value) {
+        // For admin, use server-side data directly
+        return props.applicants.data;
+    }
     let filtered = props.applicants.data;
     if (search.value) {
         const s = search.value.toLowerCase();
@@ -52,12 +68,6 @@ const filteredApplicants = computed(() => {
         filtered = filtered.filter(a => (a.status || '').toLowerCase() === statusFilter.value.toLowerCase());
     }
     return filtered;
-});
-
-watch([search, statusFilter], ([newSearch, newStatus]) => {
-    // No router.get, just filter locally
-    // If you want server-side filtering, uncomment below and remove filteredApplicants computed
-    // router.get(route('status.index'), { search: newSearch, status: newStatus }, { preserveState: true, replace: true });
 });
 
 onMounted(async () => {

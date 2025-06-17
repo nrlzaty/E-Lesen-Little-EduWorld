@@ -25,41 +25,38 @@ class ActionListController extends Controller
         $query = Applicant::query();
         $User = Auth::user();
 
-        // Apply search filter if present
-        if ($request->has('search') && $request->search) {
-            $searchTerm = $request->search;
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('nama', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('kad_pengenalan', 'like', '%' . $searchTerm . '%');
-            });
-        }
-
         // Apply role-based filters
         if ($User->role === "Admin") {
-            $query->whereIn('status', [
-                'Dalam Semakan',
-                'Pemohonan Baru',
-                'Borang Tidak Lengkap',
-                'Diluluskan',
-                'Telah Disemak',
-                'Tidak Diluluskan'
-            ]);
-        }
-        if ($User->role === "Pegawai Penyemakan") {
+            // Admin: no status filter here, allow all
+        } elseif ($User->role === "Pegawai Penyemakan") {
             $query->whereIn('status', [
                 'Dalam Semakan',
                 'Pemohonan Baru',
                 'Borang Tidak Lengkap'
             ]);
-        }
-        if ($User->role === "Kerani") {
+        } elseif ($User->role === "Kerani") {
             $query->where('user_id', $User->id);
-        }
-        if ($User->role === "Pegawai Perlulusan") {
+        } elseif ($User->role === "Pegawai Perlulusan") {
             $query->whereIn('status', ['Diluluskan','Tidak Diluluskan', 'Telah Disemak']);
         }
 
-        $Applicants = $query->paginate(10);
+        // Apply search filter if present
+        if ($request->has('search') && $request->search) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('nama', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('kad_pengenalan', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('email', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Apply status filter if present (for all roles)
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $Applicants = $query->orderBy('created_at', 'desc')->paginate(10);
+
         return Inertia::render('Status/Index', ['applicants' => $Applicants]);
     }
 
@@ -77,6 +74,9 @@ class ActionListController extends Controller
     public function show($applicant_id)
     {
         $applicant = Applicant::find($applicant_id);
+        if (!$applicant) {
+            abort(404, 'Permohonan tidak dijumpai.');
+        }
         $status = ConfigCode::where('kategori', 'status')->get();
         $Pengusaha = ButiranPengusaha::where('applicant_id', $applicant_id)->first();
         $butiranTaska = ButiranTaska::where('applicant_id', $applicant_id)->first();
