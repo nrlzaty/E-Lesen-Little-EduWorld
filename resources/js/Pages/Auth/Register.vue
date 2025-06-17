@@ -30,6 +30,8 @@ const submit = () => {
         <div class="w-full max-w-md p-8 bg-white shadow-lg flex flex-col justify-center items-center">
             <div class="mb-6">
                 <AuthenticationCardLogo />
+                <div class="text-xl font-semibold text-gray-700 text-center mb-2">SELAMAT DATANG</div>
+                <h2 class="text-lg text-gray-600 text-center mb-2">DAFTAR</h2>
             </div>
 
             <form @submit.prevent="submit" class="w-full">
@@ -92,7 +94,7 @@ const submit = () => {
                             <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
 
                             <div class="ms-2">
-                                I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Privacy Policy</a>
+                                Saya bersetuju dengan <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terma Perkhidmatan</a> dan <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Dasar Privasi</a>
                             </div>
                         </div>
                         <InputError class="mt-2" :message="form.errors.terms" />
@@ -101,11 +103,11 @@ const submit = () => {
 
                 <div class="flex items-center justify-between mt-6">
                     <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Already registered?
+                        Sudah berdaftar?
                     </Link>
 
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Register
+                        Daftar
                     </PrimaryButton>
                 </div>
             </form>

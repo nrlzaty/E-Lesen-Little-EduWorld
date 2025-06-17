@@ -29,13 +29,16 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Log Masuk" />
 
     <div class="flex h-screen bg-gray-100">
         <!-- Left Section: Login Form -->
         <div class="w-full max-w-md p-8 bg-white shadow-lg flex flex-col justify-center items-center">
             <div class="mb-6">
+              
                 <AuthenticationCardLogo />
+                    <div class="text-xl font-semibold text-gray-700 text-center mb-2">SELAMAT KEMBALI</div>
+                <h2 class="text-lg text-gray-600 text-center mb-2">LOG MASUK</h2>
             </div>
 
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -73,21 +76,21 @@ const submit = () => {
                 <div class="block mt-4">
                     <label class="flex items-center">
                         <Checkbox v-model:checked="form.remember" name="remember" />
-                        <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                        <span class="ms-2 text-sm text-gray-600">Ingat Saya</span>
                     </label>
                 </div>
 
                 <div class="flex items-center justify-between mt-6">
                     <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Forgot your password?
+                        Lupa kata laluan?
                     </Link>
 
                     <div class="flex items-center space-x-4">
                         <Link :href="route('register')" class="text-sm text-gray-600 hover:text-gray-900 underline rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Register
+                            Daftar Akaun
                         </Link>
                         <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Log in
+                            Log Masuk
                         </PrimaryButton>
                     </div>
                 </div>
@@ -100,3 +103,10 @@ const submit = () => {
         </div>
     </div>
 </template>
+
+<!-- <style scoped>
+.login-title {
+    @apply text-3xl font-extrabold text-indigo-700 text-center tracking-wide mb-4 drop-shadow-md;
+    letter-spacing: 0.05em;
+}
+</style> -->
