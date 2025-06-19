@@ -34,20 +34,20 @@ onMounted(async () => {
         if (userRole.value === 'Pegawai Penyemakan' && response.data.renewSemakanNotifications) {
             dashboardData.value.renewReviewPending = response.data.renewSemakanNotifications.length;
         }
-        // Check localStorage for kerani noti block visibility
-        if (userRole.value === 'kerani') {
+        // Update: check for 'Kerani'
+        if (userRole.value === 'Kerani') {
             keraniDiluluslanNotiBlockVisible.value = localStorage.getItem('keraniDiluluslanNotiBlockVisible') !== 'false';
             keraniRenewDiluluslanNotiBlockVisible.value = localStorage.getItem('keraniRenewDiluluslanNotiBlockVisible') !== 'false';
         }
         // Hide dashboard noti block if user has clicked the dropdown noti
         if (
-            userRole.value === 'kerani' &&
+            userRole.value === 'Kerani' &&
             localStorage.getItem('keraniDiluluskanDropdownNotiHidden') === 'true'
         ) {
             keraniDiluluslanNotiBlockVisible.value = false;
         }
         if (
-            userRole.value === 'kerani' &&
+            userRole.value === 'Kerani' &&
             localStorage.getItem('keraniRenewDiluluskanDropdownNotiHidden') === 'true'
         ) {
             keraniRenewDiluluslanNotiBlockVisible.value = false;
@@ -346,7 +346,7 @@ function openPerlulusanDropdown() {
 
         <!-- Kerani Create Application Guideline Pop-up -->
         <div
-            v-if="userRole === 'kerani' && keraniCreatePopupVisible"
+            v-if="userRole === 'Kerani' && keraniCreatePopupVisible"
             class="mb-6"
         >
             <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-800 p-4 rounded-lg shadow flex items-start relative">
@@ -945,7 +945,7 @@ function openPerlulusanDropdown() {
                         <div class="flex-shrink-0 bg-purple-100 rounded-full p-3">
                             <!-- Custom SVG icon for Perbaharui Lesen Belum Selesai -->
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-purple-600">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0  1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
                             </svg>
                         </div>
                         <div class="ml-4 flex-1">

@@ -22,8 +22,8 @@ class ConfigCodeController extends Controller
             $query->where('config_codes.keterangan', 'like', '%' . $request->search . '%'); // Adjust column name as needed
         }
 
-        // Paginate results
-        $codes = $query->paginate(10);
+        // Paginate results and append search query
+        $codes = $query->paginate(10)->appends(['search' => $request->search]);
 
         return Inertia::render('Configration/Codes/Index', [
             'codes' => $codes,

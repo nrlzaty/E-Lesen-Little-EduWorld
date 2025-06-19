@@ -27,7 +27,7 @@ class ApplicantController extends Controller
             $query->where('user_id', $User->id);
 
             // Hide old application if renewal in progress (for Kerani)
-            if (strtolower($User->role) === 'kerani') {
+            if ($User->role === 'Kerani') {
                 $renewedApplicantIds = \App\Models\RenewLicense::whereIn('applicant_id', function($q) {
                         $q->select('id')
                           ->from('applicants')
@@ -69,7 +69,7 @@ class ApplicantController extends Controller
         }
 
         $all_borang_tidak_lengkap = [];
-        if ($User->role === "kerani") {
+        if ($User->role === "Kerani") {
             $all_borang_tidak_lengkap = Applicant::where('user_id', $User->id)
                 ->where('status', 'Borang Tidak Lengkap')
                 ->get(['id', 'nama']);

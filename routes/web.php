@@ -50,10 +50,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        $user = Auth::user();
-        if ($user->role === 'Kerani') {
-            return redirect()->route('applicant.index'); // Redirect to the list pemohonan baru page
-        }
+        // Show dashboard for all users, including Kerani
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
@@ -213,7 +210,7 @@ Route::middleware([
     Route::get('/kerani-notifications', function () {
         $user = Auth::user();
         $notifications = [];
-        if ($user->role === 'kerani') {
+        if ($user->role === 'Kerani') {
             $notifications = \App\Models\Applicant::where('user_id', $user->id)
                 ->where('notification_status', 'alert_kerani')
                 ->whereIn('status', ['Borang Tidak Lengkap', 'Diluluskan', 'Tidak Diluluskan'])
@@ -253,5 +250,9 @@ Route::middleware([
     Route::get('/perlulus-telah-disemak-notifications', [\App\Http\Controllers\ActionListController::class, 'perlulusTelahDisemakNotifications']);
     Route::get('/perlulus-renew-telah-disemak-notifications', [\App\Http\Controllers\ActionListController::class, 'perlulusRenewTelahDisemakNotifications']);
     Route::post('/renew/{id}/complete', [\App\Http\Controllers\ApplicantController::class, 'completeRenewal'])->name('renew.complete');
+    Route::get('/perlulus-renew-telah-disemak-notifications', [\App\Http\Controllers\ActionListController::class, 'perlulusRenewTelahDisemakNotifications']);
+    Route::post('/renew/{id}/complete', [\App\Http\Controllers\ApplicantController::class, 'completeRenewal'])->name('renew.complete');
 });
+
+
 

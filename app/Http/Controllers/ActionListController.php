@@ -205,7 +205,7 @@ class ActionListController extends Controller
     public function dashboardData()
     {
         $user = Auth::user();
-        $role = strtolower($user->role); // normalize role to lowercase
+        $role = $user->role; // no strtolower
 
         $dashboardData = [
             'newApplications' => 0,
@@ -226,7 +226,7 @@ class ActionListController extends Controller
             'renewTidakDiluluskan' => 0,
         ];
 
-        if ($role === 'admin') {
+        if ($role === 'Admin') {
             // Admin sees everything (all cards and notifications)
             $dashboardData['newApplications'] = Applicant::where('status', 'Pemohonan Baru')->count();
             $dashboardData['penyemakanPending'] = Applicant::where('status', 'Dalam Semakan')->count();
@@ -253,7 +253,7 @@ class ActionListController extends Controller
                 ->get(['id', 'nama', 'status', 'komen']);
             $dashboardData['renewDiluluskan'] = \App\Models\Applicant::where('status', 'Perbaharui Lesen Diluluskan')->count();
             $dashboardData['renewTidakDiluluskan'] = \App\Models\Applicant::where('status', 'Perbaharui Lesen Tidak Diluluskan')->count();
-        } elseif ($role === 'pegawai penyemakan') {
+        } elseif ($role === 'Pegawai Penyemakan') {
             $dashboardData['newApplications'] = Applicant::where('status', 'Pemohonan Baru')->count();
             $dashboardData['penyemakanPending'] = Applicant::where('status', 'Dalam Semakan')->count();
             $dashboardData['borangTidakLengkap'] = Applicant::where('status', 'Borang Tidak Lengkap')->count(); // Add this line
@@ -271,7 +271,7 @@ class ActionListController extends Controller
             // Add: notification for renew applications completed by Kerani
             $dashboardData['renewSemakanNotifications'] = \App\Models\Applicant::where('status', 'Perbaharui Lesen Dalam Semakan')
                 ->get(['id', 'nama', 'status', 'komen']);
-        } elseif ($role === 'pegawai perlulusan') {
+        } elseif ($role === 'Pegawai Perlulusan') {
             $dashboardData['perlulusanPending'] = Applicant::where('status', 'Telah Disemak')->count();
             $dashboardData['diluluskan'] = Applicant::where('status', 'Diluluskan')->count();
             $dashboardData['tidakDiluluskan'] = Applicant::where('status', 'Tidak Diluluskan')->count();
@@ -285,7 +285,7 @@ class ActionListController extends Controller
             // Add: Perbaharui Lesen Diluluskan and Tidak Diluluskan counts for Pegawai Perlulusan
             $dashboardData['renewDiluluskan'] = \App\Models\Applicant::where('status', 'Perbaharui Lesen Diluluskan')->count();
             $dashboardData['renewTidakDiluluskan'] = \App\Models\Applicant::where('status', 'Perbaharui Lesen Tidak Diluluskan')->count();
-        } elseif ($role === 'kerani') {
+        } elseif ($role === 'Kerani') {
             // Only include Borang Tidak Lengkap for kerani notifications
             $dashboardData['keraniNotifications'] = Applicant::where('user_id', $user->id)
                 ->where('status', 'Borang Tidak Lengkap')

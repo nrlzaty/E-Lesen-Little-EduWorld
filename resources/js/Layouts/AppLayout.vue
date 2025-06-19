@@ -90,7 +90,7 @@ const perlulusanNotiCount = computed(() =>
 const page = usePage();
 
 const fetchKeraniNotifications = async () => {
-    if (page.props.auth.user.role === 'kerani') {
+    if (page.props.auth.user.role === 'Kerani') {
         try {
             const response = await axios.get('/dashboard-data');
             keraniNotifications.value = response.data.keraniNotifications || [];
@@ -235,7 +235,7 @@ function removeKeraniRenewDiluluskanNoti(id) {
       </div>
       <div class="flex items-center">
         <!-- Combined Kerani Notification Bell -->
-        <div v-if="$page.props.auth.user.role === 'kerani'" class="relative mr-4">
+        <div v-if="$page.props.auth.user.role === 'Kerani'" class="relative mr-4">
             <button @click="toggleKeraniNoti" class="relative focus:outline-none">
                 <!-- Bell SVG -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ">

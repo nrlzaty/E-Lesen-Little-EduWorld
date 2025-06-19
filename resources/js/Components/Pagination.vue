@@ -5,7 +5,7 @@
                 <div
                     v-if="link.url === null"
                     class="mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-400 border rounded"
-                    v-html="link.label"   
+                    v-html="replaceLabel(link.label)"   
                 >
                 </div>
                 <Link
@@ -16,7 +16,7 @@
                         link.active ? 'bg-indigo-500 text-white' : 'hover:bg-white focus:border-indigo-500 focus:text-indigo-500'
                     ]"
                 >
-                    <span v-html="link.label"></span>
+                    <span v-html="replaceLabel(link.label)"></span>
                 </Link>
             </template>
         </div>
@@ -28,4 +28,11 @@ import { Link } from '@inertiajs/vue3'
 const props = defineProps({
     links: Array
 })
+
+// Replace English labels with Bahasa Melayu
+function replaceLabel(label) {
+    if (label === '&laquo; Previous') return '&laquo; Sebelumnya'
+    if (label === 'Next &raquo;') return 'Seterusnya &raquo;'
+    return label
+}
 </script>

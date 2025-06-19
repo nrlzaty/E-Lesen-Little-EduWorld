@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 // import { ref } from 'vue';
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue';
 import Swal from 'sweetalert2';
@@ -21,7 +21,15 @@ const toggleDropdown = (index) => {
 const props = defineProps({
     codes:[Object,Array],
     kategori:String,
+    search: String,
 })
+
+onMounted(() => {
+    if (props.search !== undefined && props.search !== null) {
+        search.value = props.search;
+    }
+});
+
 const OnDelete = (row) => {
     Swal.fire({
         title: "Are you sure?",
@@ -63,36 +71,63 @@ const OnDelete = (row) => {
 };
 
 watch(search, (newSearch) => {
-    router.get(route('setting.code.index', { kategori: props.kategori }), {
-        search: newSearch
-    }, { preserveState: true });
+    // Only trigger if value actually changes
+    if (newSearch !== props.search) {
+        router.get(route('setting.code.index', { kategori: props.kategori }), {
+            search: newSearch
+        }, { preserveState: true, replace: true });
+    }
 });
 
-const clearSearch = () => {
-    search.value = ''; // Reset the search term
-    router.get(route('setting.code.index', { kategori: props.kategori }), {}, { preserveState: true }); // Reload without search term
+const clearSearch = (e) => {
+    if (e) e.preventDefault();
+    search.value = '';
+    router.get(route('setting.code.index', { kategori: props.kategori }), {}, { preserveState: true, replace: true });
 };
-
-
-
 </script>
 
 <template>
     <AppLayout title="Kod">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                KOD
+                Jenis Kod
             </h2>
-            <br>
-            <!-- Back Button -->
-          <a :href="route('setting.category.index')">
-            <button type="button" id="createProductModalButton" data-modal-target="createProductModal" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
-              Kembali
-            </button>
-          </a>
+            <!-- Breadcrumb Navigation -->
+            <nav class="flex mt-4" aria-label="Breadcrumb">
+              <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <li class="inline-flex items-center">
+                  <a :href="route('dashboard')" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                    <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                    </svg>
+                    Laman Utama
+                  </a>
+                </li>
+                <li>
+                  <div class="flex items-center">
+                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <a :href="route('setting.category.index')" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">
+                      Kategori
+                    </a>
+                  </div>
+                </li>
+                <li aria-current="page">
+                  <div class="flex items-center">
+                    <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                    </svg>
+                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
+                      Jenis Kod
+                    </span>
+                  </div>
+                </li>
+              </ol>
+            </nav>
         </template>
 
-        <div class="py-12">
+        <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden sm:rounded-lg">
                     <!-- Start block -->
@@ -102,7 +137,8 @@ const clearSearch = () => {
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
-                    <form class="flex items-center">
+                    <!-- Prevent default form submit -->
+                    <form class="flex items-center" @submit.prevent>
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -110,11 +146,16 @@ const clearSearch = () => {
                                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="text" id="simple-search" v-model="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                            <input type="text" id="simple-search" v-model="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search">
                         </div>
                         <!-- Clear Button -->
-                        <button v-if="search" @click="clearSearch" class="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 ml-2 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-700">
-                        Clear
+                        <button
+                            v-if="search"
+                            @click="clearSearch"
+                            type="button"
+                            class="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 ml-2 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-700"
+                        >
+                            Clear
                         </button>
                     </form>
                 </div>
@@ -159,7 +200,7 @@ const clearSearch = () => {
                                         <!-- <li> -->
                                             <a :href="route('setting.code.edit', code.id)">
                                                 <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">                                                   
-                                                Edit
+                                                Kemaskini
                                             </button> </a>
                                         <!-- </li> -->
                                         <!-- <li>
@@ -176,7 +217,7 @@ const clearSearch = () => {
                                         <!-- <li> -->
                                             <button @click="OnDelete(user.id)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
 
-                                                Delete
+                                                Padam
                                             </button>
                                         <!-- </li> -->
                                     <!-- </ul> -->
@@ -205,3 +246,4 @@ const clearSearch = () => {
         </div>
     </AppLayout>
 </template>
+

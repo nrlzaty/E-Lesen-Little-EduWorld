@@ -12,7 +12,8 @@ class RenewLicenseController extends Controller
 {
     public function index(Request $request)
     {
-        if (auth()->user()->role !== 'kerani') {
+        // Update: check for 'Kerani'
+        if (auth()->user()->role !== 'Kerani') {
             abort(403);
         }
 
@@ -58,7 +59,8 @@ class RenewLicenseController extends Controller
 
     public function renew($id)
     {
-        if (auth()->user()->role !== 'kerani') {
+        // Update: check for 'Kerani'
+        if (auth()->user()->role !== 'Kerani') {
             abort(403);
         }
 
