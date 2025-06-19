@@ -18,5 +18,15 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        // Ensure user is created or updated, not duplicated
+        \App\Models\User::updateOrCreate(
+            ['email' => 'nurulizzati1377@gmail.com'],
+            [
+                'name' => 'Pentadbir',
+                'password' => bcrypt('12345678'),
+                'role' => 'Admin' // Make sure your User model/table has a 'role' column
+            ]
+        );
     }
 }
