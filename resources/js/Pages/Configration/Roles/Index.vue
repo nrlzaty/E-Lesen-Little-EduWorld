@@ -97,7 +97,7 @@ const clearSearch = () => {
                         </div>
                         <!-- Clear Button -->
                         <button v-if="search" @click="clearSearch" class="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 ml-2 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-700">
-                        Clear
+                        Padam
                         </button>
                     </form>
                 </div>
@@ -131,19 +131,19 @@ const clearSearch = () => {
                             <td class="px-4 py-3">{{ (props.Roles.current_page - 1) * props.Roles.per_page + index + 1 }}</td>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ role.name }}</th>
                             <td class="px-4 py-3">{{ role.code_name }}</td>
-                            <td class="px-4 py-3">{{ role.is_active ? 'active' : 'non-active' }}</td>
+                            <td class="px-4 py-3">{{ role.is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <div class="inline-flex rounded-md shadow-sm" role="group">
                                     <!-- Edit Button -->
                                     <a :href="route('setting.role.edit', role.id)">
                                         <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                                            Edit
+                                            Kemaskini
                                         </button>
                                     </a>
 
                                     <!-- Delete Button -->
                                     <button @click="OnDelete(role.id)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
-                                        Delete
+                                        Padam
                                     </button>
                                 </div>
                             </td>

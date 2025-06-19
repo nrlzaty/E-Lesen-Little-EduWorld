@@ -56,34 +56,7 @@
             Tiada keputusan carian dijumpai
         </td>
     </tr>
-    <td class="px-4 py-3">
-                                <div class="flex items-center justify-center gap-2">
-                                    <button
-                                        v-if="applicant.komen && applicant.komen.trim() !== ''"
-                                        @click="Swal.fire({ title: 'Komen', text: applicant.komen, icon: 'info' })"
-                                        type="button"
-                                        class="p-1 rounded bg-emerald-200 hover:bg-emerald-300 text-gray-700"
-                                        title="Lihat komen"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                                        </svg>
-
-                                    </button>
-                                    <button
-                                        v-else
-                                        type="button"
-                                        class="p-1 rounded bg-emerald-50 text-gray-400 cursor-not-allowed"
-                                        title="Tiada komen diberi"
-                                        disabled
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                                        </svg>
-
-                                    </button>
-                                </div>
-                            </td>
+    
     <tr v-for="(applicant, index) in props.applicants.data" :key="index" class="border-b dark:border-gray-700">
         <td class="px-4 py-3">{{ (props.applicants.current_page - 1) * props.applicants.per_page + index + 1 }}</td>
         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ applicant.nama }}</th>
@@ -185,3 +158,6 @@ const downloadPdf = async (id) => {
     }
 };
 </script>
+
+
+

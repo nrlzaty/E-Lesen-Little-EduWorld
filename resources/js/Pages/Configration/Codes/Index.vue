@@ -178,6 +178,7 @@ const clearSearch = (e) => {
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" class="px-4 py-4">#</th>
                             <th scope="col" class="px-4 py-4">Kod</th>
                             <th scope="col" class="px-4 py-4">Keterangan</th>
                             <th scope="col" class="px-4 py-3">
@@ -186,7 +187,10 @@ const clearSearch = (e) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(code,index) in props.codes.data" class="border-b dark:border-gray-700">
+                        <tr v-for="(code,index) in props.codes.data" :key="code.id" class="border-b dark:border-gray-700">
+                            <td class="px-4 py-3">
+                                {{ (props.codes.current_page - 1) * props.codes.per_page + index + 1 }}
+                            </td>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ code.kod }}</th>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ code.keterangan }}</th>
                             <td class="px-4 py-3 flex items-center justify-end">
@@ -215,7 +219,7 @@ const clearSearch = (e) => {
                                             </a>
                                         </li> -->
                                         <!-- <li> -->
-                                            <button @click="OnDelete(user.id)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
+                                            <button @click="OnDelete(code.id)" type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-2 focus:ring-red-700 focus:text-red-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-red-500 dark:focus:text-white">
 
                                                 Padam
                                             </button>

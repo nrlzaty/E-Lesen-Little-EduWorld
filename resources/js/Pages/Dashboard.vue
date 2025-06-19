@@ -286,7 +286,7 @@ function openPerlulusanDropdown() {
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
                                         </svg>
                                     </span>
-                                    <span>Perbaharui Lesen Belum Selesai: <b>{{ dashboardData.renewReviewPending ?? 0 }}</b></span>
+                                    <span>Perbaharui Lesen Belum Disemak: <b>{{ dashboardData.renewReviewPending ?? 0 }}</b></span>
                                 </a>
                                 <!-- Card 3 -->
                                 <a :href="route('status.borang-tidak-lengkap')" class="flex items-center bg-pink-50 rounded-xl p-4 hover:bg-pink-100 transition">
@@ -301,7 +301,7 @@ function openPerlulusanDropdown() {
                         </div>
                     </div>
                     <!-- Pegawai Perlulusan Card with Dropdown -->
-                    <div class="relative">
+                    <div class="relative" v-if="userRole === 'Pegawai Perlulusan' || userRole === 'Admin'">
                         <button
                             @click="openPerlulusanDropdown"
                             class="flex items-center bg-[#FFFEF0] border border-red-100 rounded-2xl shadow p-6 min-w-[320px] hover:shadow-md transition focus:outline-none"
@@ -335,7 +335,7 @@ function openPerlulusanDropdown() {
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
                                         </svg>
                                     </span>
-                                    <span>Perbaharui Lesen Belum Selesai: <b>{{ dashboardData.renewTelahDisemak ?? 0 }}</b></span>
+                                    <span>Perbaharui Lesen Belum Diluluskan: <b>{{ dashboardData.renewTelahDisemak ?? 0 }}</b></span>
                                 </a>
                             </div>
                         </div>
@@ -969,7 +969,7 @@ function openPerlulusanDropdown() {
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5h6M9 3h6a2 2 0 012 2v14a2 2 0 01-2 2H9a2 2 0 01-2-2V5a2 2 0 012-2z"/>
                             </svg>
-                            </div>
+                        </div>
                         <div class="ml-4 flex-1">
                             <div class="text-3xl font-extrabold text-red-500">
                                 <a v-if="dashboardData.perlulusanPending > 0" :href="route('status.telah-disemak')" class="hover:underline">

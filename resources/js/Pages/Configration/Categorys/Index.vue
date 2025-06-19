@@ -104,17 +104,22 @@ const clearSearch = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(category, index) in props.categories.data" :key="index" class="border-b dark:border-gray-700">
-                            <td class="px-4 py-3">{{ (props.categories.current_page - 1) * props.categories.per_page + index + 1 }}</td>
-                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ formatCategoryName(category.kategori) }}</th>
-                            <td class="px-4 py-3 flex items-center justify-end">
-                                <a :href="route('setting.code.index', category.kategori)">
-                                    <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                                      Lihat  
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
+                        <tr v-if="!props.categories.data || props.categories.data.length === 0">
+        <td colspan="3" class="px-4 py-6 text-center text-gray-500 dark:text-gray-400">
+            Tiada data dijumpai
+        </td>
+    </tr>
+    <tr v-for="(category, index) in props.categories.data" :key="index" class="border-b dark:border-gray-700" v-else>
+        <td class="px-4 py-3">{{ (props.categories.current_page - 1) * props.categories.per_page + index + 1 }}</td>
+        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ formatCategoryName(category.kategori) }}</th>
+        <td class="px-4 py-3 flex items-center justify-end">
+            <a :href="route('setting.code.index', category.kategori)">
+                <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
+                  Lihat  
+                </button>
+            </a>
+        </td>
+    </tr>
                     </tbody>
                 </table>
                 

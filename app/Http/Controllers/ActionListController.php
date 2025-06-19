@@ -481,7 +481,7 @@ class ActionListController extends Controller
     public function perbaharuiLesenList(Request $request)
     {
         $user = Auth::user();
-        if ($user->role !== 'Pegawai Penyemakan') {
+        if (!in_array($user->role, ['Pegawai Penyemakan', 'Admin'])) {
             abort(403, 'Unauthorized');
         }
 
@@ -514,7 +514,7 @@ class ActionListController extends Controller
     public function perbaharuiLesenTelahDisemak(Request $request)
     {
         $user = Auth::user();
-        if ($user->role !== 'Pegawai Perlulusan') {
+        if (!in_array($user->role, ['Pegawai Perlulusan', 'Admin'])) {
             abort(403, 'Unauthorized');
         }
 
