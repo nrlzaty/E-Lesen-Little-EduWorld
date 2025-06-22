@@ -99,9 +99,10 @@ class ApplicantController extends Controller
             'telefon_b' => 'nullable|string|max:15',
             'telefon_p' => 'nullable|string|max:15',
             'faks' => 'nullable|string|max:15',
-            'user_id' => 'nullable|integer',
-
         ]);
+
+        $validated['user_id'] = Auth::id();
+        $validated['pengesah_id'] = null; // Add this line to avoid SQL error
 
         // Save data to the database
         $applicant = Applicant::create($validated);

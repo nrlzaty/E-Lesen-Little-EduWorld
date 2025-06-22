@@ -21,6 +21,7 @@ class Applicant extends Model
         'telefon_p',
         'faks',
         'user_id',
+        'pengesah_id', // <-- add this line
         'start_date',
         'expiry_date',
         'status',
