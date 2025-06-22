@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref } from 'vue';
 import Multiselect from 'vue-multiselect';
 import { useForm } from '@inertiajs/vue3';
-import Swal from 'sweetalert2'; // <-- Add this import
+import Swal from 'sweetalert2';
 
 const props = defineProps({
   errors:Object,
@@ -23,14 +23,18 @@ const OnSubmit = () => {
     form.put(route('setting.code.update', props.codes.id), {
         errorBag:'updateCode',
         preserveScroll:true,
+        preserveState:true,
+        replace: false,
         onSuccess: () => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berjaya!',
-                text: 'Kod berjaya dikemaskini.',
-                timer: 2000,
-                showConfirmButton: false
-            });
+            setTimeout(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berjaya!',
+                    text: 'Kod berjaya dikemaskini.',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }, 100);
         }
     })
 } //function 

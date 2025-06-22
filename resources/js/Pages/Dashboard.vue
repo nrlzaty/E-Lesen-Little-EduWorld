@@ -312,7 +312,7 @@ function openPerlulusanDropdown() {
                                     <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                 </svg>
                             </span>
-                            <span class="font-semibold text-lg text-black">Pegawai Perlulusan</span>
+                            <span class="font-semibold text-lg text-black">Pegawai Perlulusan </span>
                             <svg :class="perlulusanDropdownOpen ? 'rotate-180' : ''" class="ml-auto h-5 w-5 text-gray-400 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                             </svg>
